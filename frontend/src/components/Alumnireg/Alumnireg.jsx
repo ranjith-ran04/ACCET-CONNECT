@@ -18,7 +18,6 @@ const AlumniReg = () => {
   });
   const[error,setError]=useState({});
   
-
   const handleChange = (e) => {
     setFormData({
       ...formData,
