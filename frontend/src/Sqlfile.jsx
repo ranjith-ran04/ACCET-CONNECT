@@ -24,7 +24,10 @@ function Sqlfile() {
         headers: { "Content-Type": "multipart/form-data" },
       });
       console.log(res);
-      setMessage(res.data.message);
+      if(res.status===200){
+        setMessage(res.data.message);
+      }
+      
     } catch (err) {
       setMessage("Error uploading file!");
     }
