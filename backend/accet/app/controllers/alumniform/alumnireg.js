@@ -6,7 +6,6 @@ async function alumnireg(req, res) {
   if (!data || Object.keys(data).length === 0) {
     return res.status(400).json({success: false, message: "No data provided"});
   }
-
   const columns = Object.keys(data).join(', ');
   const placeholders = Object.keys(data).map(() => '?').join(', ');
   const values = Object.values(data);

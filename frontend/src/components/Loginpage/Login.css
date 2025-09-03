@@ -1,0 +1,104 @@
+body {
+  font-family: 'Poppins', sans-serif;
+  background:#6787e7;
+  margin: 0;
+  padding: 0;
+}
+img{
+  height: 100px;
+  width:100px;
+}
+.login-container {
+  max-width: 400px;
+  margin: 80px auto;
+  padding: 30px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+  text-align: center;
+}
+
+.form-title {
+  margin-top: 10px;
+  margin-bottom: 5px;
+}
+
+.separator span {
+  display: block;
+  width: 60px;
+  height: 2px;
+  background: #3498db;
+  margin: 15px auto;
+  border-radius: 1px;
+}
+
+.input-wrapper {
+
+  position: relative;
+  margin-bottom: 20px;
+  width: 350px;
+
+  
+  
+}
+.input-wrapper.material-symbols-rounded{
+  color:#666;
+  margin-left: 8px;
+
+}
+
+.input-field {
+  width: 100%;
+  padding: 12px 12px 12px 45px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 16px;
+}
+
+.input-wrapper i {
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #888;
+}
+
+.login-button {
+  width: 100%;
+  padding: 12px;
+  background: royalblue;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.login-button:hover {
+  background: #4169e1;
+}
+
+.error-message {
+  color: red;
+  margin-bottom: 10px;
+  font-size: 14px;
+}
+
+.forget-pass {
+  display: block;
+  text-align: left;
+  margin-bottom: 20px;
+  font-size: 14px;
+  color: #3498db;
+  text-decoration: none;
+}
+
+.signup-text {
+  margin-top: 15px;
+  font-size: 14px;
+}
+.signup-text a {
+  color: royalblue;
+  text-decoration: none;
+}

@@ -2,7 +2,7 @@ import { useState } from 'react';
 import axios from 'axios';
 import './AlumniReg.css';
 import { path } from '../constants/backendpath';
-import { toast } from 'react-toastify';
+// import { toast } from 'react-toastify';
 
 const AlumniReg = () => {
   const [formData, setFormData] = useState({
