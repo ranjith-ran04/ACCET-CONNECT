@@ -1,6 +1,6 @@
 import { useState } from "react";
 import axios from "axios";
-import { path } from "./components/constants/backendpath";
+import { adminpath } from "./components/constants/backendpath";
 
 function Sqlfile() {
   const [file, setFile] = useState(null);
@@ -20,7 +20,7 @@ function Sqlfile() {
     formData.append("file", file);
 
     try {
-      const res = await axios.post(`${path}excelupload`, formData, {
+      const res = await axios.post(`${adminpath}excelupload`, formData, {
         headers: { "Content-Type": "multipart/form-data" },
       });
       console.log(res);

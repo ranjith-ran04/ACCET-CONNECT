@@ -1,8 +1,11 @@
-import React from "react";
 import { useNavigate } from "react-router-dom";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome"
 import {faGraduationCap,faBriefcase} from "@fortawesome/free-solid-svg-icons"
 import "./rolepage.css"; 
+import { useState } from "react";
+// import Login from "../Loginpage/Login";
+// import AlumniReg from "../Alumnireg/Alumnireg";
+
 
 const RoleCard = ({ icon, title, description, benefits, onClick }) => (
   <div className="role-card" onClick={onClick}>
@@ -18,15 +21,20 @@ const RoleCard = ({ icon, title, description, benefits, onClick }) => (
 );
 
 const RolePage = () => {
+  const [role,setRole]=useState("")
+
   const navigate = useNavigate();
 
   const handleStudentClick = () => {
-    navigate("/studentpage"); // navigate to Student page
+   navigate("/login", { state: { role: "student" } });
   };
 
   const handleAlumniClick = () => {
-    navigate("/alumnipage"); // navigate to Alumni page
+   navigate("/alumnireg", { state: { role: "alumni" } });
   };
+  
+
+
   return (
     <div className="role-page">
       <div className="role-header">
