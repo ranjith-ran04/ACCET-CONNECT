@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import "./StudentForm.css";
-import logo from "./assets/logos.png";
+import logo from "../../assets/logos.png";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 

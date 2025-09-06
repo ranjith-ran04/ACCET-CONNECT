@@ -3,7 +3,6 @@ import axios from 'axios';
 import './AlumniReg.css';
 import { path } from '../constants/backendpath';
 import { useNavigate,useLocation} from 'react-router-dom';
-import Login from '../Loginpage/Login';
 import { toast } from 'react-toastify';
 
 
