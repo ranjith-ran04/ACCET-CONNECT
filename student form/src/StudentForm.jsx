@@ -6,12 +6,14 @@ import "react-toastify/dist/ReactToastify.css";
 
 const StudentForm = () => {
   const [formData, setFormData] = useState({
-    rollNumber: "",
+    registerNumber: "",
     name: "",
     email: "",
     phone: "",
     department: "",
     year: "",
+    semester: "",
+    passingOutYear: "",
     skills: "",
     interest: "",
     careerPath: "",
@@ -19,12 +21,14 @@ const StudentForm = () => {
   });
 
   const refs = {
-    rollNumber: useRef(),
+    registerNumber: useRef(),
     name: useRef(),
     email: useRef(),
     phone: useRef(),
     department: useRef(),
     year: useRef(),
+    semester: useRef(),
+    passingOutYear: useRef(),
     skills: useRef(),
     interest: useRef(),
     careerPath: useRef(),
@@ -33,11 +37,11 @@ const StudentForm = () => {
   };
 
   useEffect(() => {
-    refs.rollNumber.current?.focus();
+    refs.registerNumber.current?.focus();
   }, []);
 
-  const capitalizeWords = (value) => {
-    return value
+  const capitalizeWords = (value) =>
+    value
       .split(" ")
       .map((word) =>
         word.length > 0
@@ -45,18 +49,16 @@ const StudentForm = () => {
           : ""
       )
       .join(" ");
-  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
 
-    if (name === "rollNumber" && !/^\d*$/.test(value)) return;
+    if (name === "registerNumber" && !/^\d*$/.test(value)) return;
     if (name === "phone" && !/^\d*$/.test(value)) return;
+    if (name === "passingOutYear" && !/^\d*$/.test(value)) return;
     if (name === "name" && !/^[a-zA-Z. ]*$/.test(value)) return;
 
-    if (
-      ["name", "skills", "interest", "careerPath", "lookingFor"].includes(name)
-    ) {
+    if (["name", "skills", "interest", "careerPath", "lookingFor"].includes(name)) {
       setFormData({ ...formData, [name]: capitalizeWords(value) });
       return;
     }
@@ -69,13 +71,22 @@ const StudentForm = () => {
     let formErrors = {};
 
     Object.keys(formData).forEach((key) => {
-      if (!formData[key]) {
-        formErrors[key] = `Please enter your ${key.replace(/([A-Z])/g, " $1")}`;
+      if (
+        !formData[key] &&
+        !["skills", "interest", "careerPath", "lookingFor"].includes(key)
+      ) {
+        formErrors[key] = `Please enter your ${key
+          .replace(/([A-Z])/g, " $1")
+          .toLowerCase()}`;
       }
     });
 
     if (formData.phone && formData.phone.length !== 10) {
       formErrors.phone = "Phone number must be exactly 10 digits";
+    }
+
+    if (formData.passingOutYear && formData.passingOutYear.length !== 4) {
+      formErrors.passingOutYear = "Passing Out Year must be 4 digits (e.g., 2026)";
     }
 
     if (formData.name && !/^[a-zA-Z. ]+$/.test(formData.name)) {
@@ -102,34 +113,32 @@ const StudentForm = () => {
     toast.success("🎉 Student Registered Successfully!", {
       position: "top-right",
       autoClose: 3000,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
     });
 
     console.log("Student Data:", formData);
 
     setFormData({
-      rollNumber: "",
+      registerNumber: "",
       name: "",
       email: "",
       phone: "",
       department: "",
       year: "",
+      semester: "",
+      passingOutYear: "",
       skills: "",
       interest: "",
       careerPath: "",
       lookingFor: "",
     });
 
-    refs.rollNumber.current?.focus();
+    refs.registerNumber.current?.focus();
   };
 
-  // 👉 NEW: handle Enter on dropdown to open it like mouse click
   const handleDropdownKeyDown = (e) => {
     if (e.key === "Enter") {
       e.preventDefault();
-      e.target.click(); // opens native dropdown
+      e.target.click();
     }
   };
 
@@ -138,23 +147,28 @@ const StudentForm = () => {
       e.preventDefault();
 
       const errorFields = Object.keys(formData).filter((key) => {
-        if (!formData[key]) return true;
+        if (
+          !formData[key] &&
+          !["skills", "interest", "careerPath", "lookingFor"].includes(key)
+        )
+          return true;
         if (key === "phone" && formData[key].length !== 10) return true;
+        if (key === "passingOutYear" && formData[key].length !== 4) return true;
         return false;
       });
 
       if (errorFields.length > 0) {
         refs[errorFields[0]].current.focus();
       } else {
-        if (field === "phone") {
-          refs.department.current.focus();
-        } else if (field === "department") {
-          refs.year.current.focus();
-        } else if (field === "year") {
-          refs.skills.current.focus();
-        } else {
-          refs.submit.current.focus();
-        }
+        if (field === "phone") refs.department.current.focus();
+        else if (field === "department") refs.year.current.focus();
+        else if (field === "year") refs.semester.current.focus();
+        else if (field === "semester") refs.passingOutYear.current.focus();
+        else if (field === "passingOutYear") refs.skills.current.focus();
+        else if (field === "skills") refs.interest.current.focus();
+        else if (field === "interest") refs.careerPath.current.focus();
+        else if (field === "careerPath") refs.lookingFor.current.focus();
+        else refs.submit.current.focus();
       }
     }
   };
@@ -170,15 +184,15 @@ const StudentForm = () => {
         {Object.keys(formData).map((field) => (
           <div className="input-group" key={field}>
             <label
-              className={
-                formData[field] || refs[field]?.current === document.activeElement
-                  ? "active"
-                  : ""
-              }
+              className={formData[field] !== "" ? "active" : ""}
             >
-              {field.replace(/([A-Z])/g, " $1").replace(/^./, (str) =>
-                str.toUpperCase()
-              )}
+              {field === "registerNumber"
+                ? "Register Number"
+                : field === "passingOutYear"
+                ? "Passing Out Year"
+                : field.replace(/([A-Z])/g, " $1").replace(/^./, (str) =>
+                    str.toUpperCase()
+                  )}
             </label>
 
             {field === "department" ? (
@@ -193,7 +207,7 @@ const StudentForm = () => {
                 }}
                 ref={refs.department}
               >
-                <option hidden value=""></option>
+                <option value=""></option>
                 <option value="Civil">Civil</option>
                 <option value="Mechanical">Mechanical</option>
                 <option value="EEE">EEE</option>
@@ -213,15 +227,35 @@ const StudentForm = () => {
                 }}
                 ref={refs.year}
               >
-                <option hidden value=""></option>
+                <option value=""></option>
                 <option value="I">I</option>
                 <option value="II">II</option>
                 <option value="III">III</option>
                 <option value="IV">IV</option>
               </select>
-            ) : ["skills", "interest", "careerPath", "lookingFor"].includes(
-                field
-              ) ? (
+            ) : field === "semester" ? (
+              <select
+                name="semester"
+                className="black-text line-input dropdown"
+                value={formData.semester}
+                onChange={handleChange}
+                onKeyDown={(e) => {
+                  handleKeyDown(e, "semester");
+                  handleDropdownKeyDown(e);
+                }}
+                ref={refs.semester}
+              >
+                <option value=""></option>
+                <option value="I">I</option>
+                <option value="II">II</option>
+                <option value="III">III</option>
+                <option value="IV">IV</option>
+                <option value="V">V</option>
+                <option value="VI">VI</option>
+                <option value="VII">VII</option>
+                <option value="VIII">VIII</option>
+              </select>
+            ) : ["skills", "interest", "careerPath", "lookingFor"].includes(field) ? (
               <textarea
                 name={field}
                 className="black-text line-input"
@@ -233,7 +267,13 @@ const StudentForm = () => {
               />
             ) : (
               <input
-                type={field === "email" ? "email" : "text"}
+                type={
+                  field === "email"
+                    ? "email"
+                    : field === "phone" || field === "registerNumber" || field === "passingOutYear"
+                    ? "number"
+                    : "text"
+                }
                 name={field}
                 className="black-text line-input"
                 value={formData[field]}
@@ -257,3 +297,4 @@ const StudentForm = () => {
 };
 
 export default StudentForm;
+

@@ -9,7 +9,7 @@ body {
   justify-content: center;
   align-items: center;
   position: relative;
-  background-color: aliceblue;
+  background-color: white;
 }
 
 .black-text {
@@ -20,7 +20,8 @@ body {
 
 input,
 textarea,
-button {
+button,
+select {
   width: 100%;
   padding: 10px;
   margin-top: 8px;
@@ -31,9 +32,22 @@ button {
   background-color: aliceblue;
   transition: all 0.3s ease-in-out;
 }
+/* 🔹 Remove number input spinners in Chrome, Edge, Safari */
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* 🔹 Remove number input spinners in Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
 
 input:focus,
-textarea:focus {
+textarea:focus,
+select:focus {
   border-color: rgba(0, 123, 255, 0.4);
   box-shadow: 0 0 8px rgba(0, 123, 255, 0.4);
   transform: scale(1.02);
@@ -122,6 +136,7 @@ button:hover {
   pointer-events: none;
 }
 
+
 .line-input:focus + label,
 .line-input:not(:placeholder-shown) + label,
 .input-group label.active {
@@ -130,12 +145,13 @@ button:hover {
   color: #0055aa;
 }
 
-/* Dropdown styling */
+
+/* Dropdown styling (applies to department, year, semester) */
 .dropdown {
   font-family: 'Libertinus Serif', cursive;
   font-size: 22px;
   color: #000;
-  background: aliceblue;
+  background: white;
   border: none;
   border-bottom: 2px solid #0055aa;
   outline: none;
@@ -144,7 +160,7 @@ button:hover {
   appearance: none; /* remove browser default arrow */
   cursor: pointer;
 
-  /* Arrow in #0055aa */
+  /* Custom arrow */
   background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='24' height='24'><polygon points='0,0 24,0 12,12' fill='%230055aa'/></svg>");
   background-repeat: no-repeat;
   background-position: right 10px center;
@@ -155,6 +171,8 @@ button:hover {
   border-bottom: 2px solid #0055aa;
   box-shadow: 0 0 8px rgba(0, 123, 255, 0.4);
 }
+
+/* ----------- Mobile (max 600px) ----------- */
 @media (max-width: 600px) {
   .logo {
     width: 100px;
@@ -167,7 +185,8 @@ button:hover {
   .line-input,
   .dropdown,
   input,
-  textarea {
+  textarea,
+  select {
     font-size: 16px;
     padding: 8px;
   }
@@ -177,7 +196,6 @@ button:hover {
     top: 10px;
   }
 
-  /* floating label when active/focused */
   .line-input:focus + label,
   .line-input:not(:placeholder-shown) + label,
   .input-group label.active {
@@ -210,7 +228,8 @@ button:hover {
   .line-input,
   .dropdown,
   input,
-  textarea {
+  textarea,
+  select {
     font-size: 18px;
     padding: 9px;
   }
@@ -220,7 +239,6 @@ button:hover {
     top: 12px;
   }
 
-  /* floating label when active/focused */
   .line-input:focus + label,
   .line-input:not(:placeholder-shown) + label,
   .input-group label.active {
@@ -253,7 +271,8 @@ button:hover {
   .line-input,
   .dropdown,
   input,
-  textarea {
+  textarea,
+  select {
     font-size: 20px;
     padding: 10px;
   }
@@ -262,7 +281,6 @@ button:hover {
     font-size: 20px;
   }
 
-  /* floating label when active/focused */
   .line-input:focus + label,
   .line-input:not(:placeholder-shown) + label,
   .input-group label.active {
