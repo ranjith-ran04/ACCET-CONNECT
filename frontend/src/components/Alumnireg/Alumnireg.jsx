@@ -2,9 +2,13 @@ import { useState } from 'react';
 import axios from 'axios';
 import './AlumniReg.css';
 import { path } from '../constants/backendpath';
-// import { toast } from 'react-toastify';
+import { useNavigate,useLocation} from 'react-router-dom';
+import Login from '../Loginpage/Login';
+import { toast } from 'react-toastify';
 
-const AlumniReg = () => {
+
+// const navigate=useNavigate();
+const AlumniReg = ( ) => {
   const [formData, setFormData] = useState({
     full_name: '',
     email: '',
@@ -17,6 +21,9 @@ const AlumniReg = () => {
     linkedin: ''
   });
   const[error,setError]=useState({});
+  const navigate = useNavigate();
+  const location = useLocation();
+  const role = location.state?.role || "alumni";
   
 
   const handleChange = (e) => {
@@ -33,6 +40,7 @@ const AlumniReg = () => {
       const res = await axios.post(`${path}alumniform`,formData);
       if(res.status===200){
         toast.success("Alumni registration completed");
+        navigate("/login", { state: { role: "alumni" } });
       }
     } catch (err) {
       console.error(err);

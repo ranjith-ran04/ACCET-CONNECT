@@ -1,9 +1,9 @@
-const connection = require("../config/dbconnect");
+const connection = require("../../config/dbconnect");
 const xlsx = require("xlsx");
 
 const uploadExcel = async (req, res) => {
   try {
-    console.log(req.file);
+    // console.log(req.file);
     if (!req.file) {
       return res.status(400).json({ message: "No file uploaded" });
     }
@@ -12,7 +12,7 @@ const uploadExcel = async (req, res) => {
     const sheetName = workbook.SheetNames[0];
     const sheet = workbook.Sheets[sheetName];
     const data = xlsx.utils.sheet_to_json(sheet);
-    console.log("excel",data);  
+    // console.log("excel",data);  
     for (let row of data) {
       const { regno, aadhar } = row; 
 
